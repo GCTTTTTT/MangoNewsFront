@@ -14,6 +14,7 @@ export function getTinyArtOnePageByType(artType, page, pageSize) {
             pageSize: pageSize
         }
     };
+
     return axios.get(base + 'tiny', config);
 }
 

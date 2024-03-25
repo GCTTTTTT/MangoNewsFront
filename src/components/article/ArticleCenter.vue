@@ -1,3 +1,4 @@
+<!-- 文章点进去的正文部分 -->
 <template>
     <div class="article-main">
         <div class="title">{{ articleMain.artTitle }}</div>

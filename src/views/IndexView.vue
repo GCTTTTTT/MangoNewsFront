@@ -59,6 +59,11 @@ export default {
             .then(() => {
                 getTinyArtOnePageByType('综合', this.page.tinyPage, this.page.tinyPageSize)
                     .then((response) => {
+                        // 遍历对象数组，将每个对象转换为字符串并连接成一个长字符串
+                        let dataString = response.data.map(obj => JSON.stringify(obj)).join('\n');
+                        window.console.log(dataString);
+                        alert(dataString);
+
                         this.tinyArticles = response.data;
                     });
                 getHotArtOnePage(this.page.hotPage, this.page.hotPageSize)

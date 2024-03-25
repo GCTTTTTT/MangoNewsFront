@@ -1,3 +1,4 @@
+<!-- 主页中显示各个新闻的简介，包括新闻标题、新闻类型、发布时间、发布者等信息。 -->
 <template>
     <float-card class="float-card clear-float">
         <!-- <div class="image" v-if="tinyArticle.artImageUrl !== ''">
