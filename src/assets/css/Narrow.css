@@ -5,7 +5,7 @@ body {
 header {
     height: 60px;
     margin-bottom: 10px;
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,.12);
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .12);
 
     width: 1000000px;
     overflow: hidden;
@@ -29,7 +29,7 @@ main {
 /*}*/
 
 article {
-    margin-left:0;
+    margin-left: 0;
     width: 710px;
 }
 
@@ -40,11 +40,22 @@ aside {
     margin-left: 750px;
 }
 
-.top-bar {
+/* .top-bar {
     width: 1030px;
     height: 40px;
     padding: 10px 0px 10px 0px;
     position: fixed;
     left: -515px;
     margin-left: 50%;
+} */
+/* FIX */
+.top-bar {
+    width: 1180px;
+    height: 40px;
+    padding: 10px 0px 10px 0px;
+    position: fixed;
+    left: -590px;
+    /* margin-left: 50%; */
+    /* FIX */
+    margin-left: 45%;
 }
