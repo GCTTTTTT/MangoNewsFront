@@ -70,7 +70,8 @@ export default {
         },
         // update:3.16
         onImageError(event) {
-            event.target.src = require('@/assets/logo.png');
+            // event.target.src = require('@/assets/logo.png');
+            event.target.src = require('@/assets/image/text-image-logo.png')
         }
     },
     data: function () {

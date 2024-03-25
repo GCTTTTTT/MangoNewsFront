@@ -50,7 +50,9 @@
     import ReplyMain from "./comment-reply-main/ReplyMain";
     import {transUTCtoLocal} from "../../util/TimeHandler";
     import {addNewCom, cusAddReply} from "../../control/Discuss";
-    import {jumpInNewPage} from "../../util/PageJump";
+    // import {jumpInNewPage} from "../../util/PageJump";
+    import {jumpInCurPage} from "../../util/PageJump";
+
 
     /**
      * /src/components/article/comment-reply-main/ 路径下包含了 CommentReplyMain 模块需要的子组件
@@ -146,7 +148,9 @@
                 this.control.add.id = -1;
             },
             jumpToCus: function (cusId) {
-                jumpInNewPage('/self/' + cusId);
+                // jumpInNewPage('/self/' + cusId);
+                jumpInCurPage('/self/' + cusId);
+
             }
         },
         data: function() {

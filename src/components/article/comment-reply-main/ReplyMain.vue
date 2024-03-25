@@ -46,7 +46,9 @@
     import CommentReplyInput from "./CommentReplyInput";
     import {transUTCtoLocal} from "../../../util/TimeHandler";
     import {cusAddReply} from "../../../control/Discuss";
-    import {jumpInNewPage} from "../../../util/PageJump";
+    // import {jumpInNewPage} from "../../../util/PageJump";
+    import {jumpInCurPage} from "../../../util/PageJump";
+
     export default {
         name: "ReplyMain",
         components: {CommentReplyInput},
@@ -107,7 +109,9 @@
                 this.add.id = -1;
             },
             jumpToCus: function (cusId) {
-                jumpInNewPage('/self/' + cusId);
+                // jumpInNewPage('/self/' + cusId);
+                jumpInCurPage('/self/' + cusId);
+
             }
         },
         data: function () {

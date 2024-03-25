@@ -16,6 +16,7 @@
                     <el-col :span="6">
                         <el-form-item label="文章类别">
                             <el-select v-model="form.type" placeholder="文章类别">
+                                <!-- todo:修改成孟加拉语料类别 -->
                                 <el-option label="社会" value="社会"></el-option>
                                 <el-option label="军事" value="军事"></el-option>
                                 <el-option label="财经" value="财经"></el-option>
@@ -58,142 +59,139 @@
 
 
 <script>
-    import TopBar from "../components/edit/TopBar";
-    import {getCusBasicInfo} from "../control/Self";
-    import {jumpInCurPage} from "../util/PageJump";
-    import WangEditor from 'wangeditor'
-    import {addNewArt} from "../control/Edit";
-    export default {
-        name: "EditView.vue",
-        components: {TopBar},
-        mounted: function() {
-            getCusBasicInfo(0)
-                .then((response) => {
-                    if (response.data) {
-                        this.customer = response.data;
-                    } else {
-                        // this.$router.push({path: '/port'});
-                        jumpInCurPage('/port');
-                    }
-                });
-
-            let editor = new WangEditor(this.$refs.toolbar, this.$refs.textplace);
-            this.editor = editor;
-            editor.customConfig.onchange = (html) => {
-                this.message = html;
-            };
-            editor.customConfig.menus = this.menus;
-            editor.create();
-
-            window.scrollTo(0, 0);
-        },
-        methods: {
-            onSubmit() {
-                // this.$message.info(this.message);
-                let article = {
-                    artTitle: this.form.name,
-                    artContent: this.message,
-                    artCusId: this.customer.cusId,
-                    artType: this.form.type,
-                    artImageUrl: ''
-                };
-                // this.$message.info(article.artTitle)
-                addNewArt(article)
-                    .then(
-                        (response) => {
-                            if (response.data !== 0) {
-                                this.$message.info("文章添加成功");
-                                jumpInCurPage('/article/' + response.data)
-                            } else {
-                                this.$message.info("文章添加失败");
-                            }
-                        }
-                    )
-            },
-            cancelCreate: function () {
-                jumpInCurPage('/index')
-            }
-        },
-        data: function () {
-            return {
-                customer: {
-
-                },
-                message: 'message',
-                menus: [
-                    'head',  // 标题
-                    'bold',  // 粗体
-                    // 'fontSize',  // 字号
-                    // 'fontName',  // 字体
-                    'italic',  // 斜体
-                    'underline',  // 下划线
-                    'strikeThrough',  // 删除线
-                    // 'foreColor',  // 文字颜色
-                    // 'backColor',  // 背景颜色
-                    // 'link',  // 插入链接
-                    'list',  // 列表
-                    'justify',  // 对齐方式
-                    // 'quote',  // 引用
-                    'emoticon',  // 表情
-                    'image',  // 插入图片
-                    'table',  // 表格
-                    // 'video',  // 插入视频
-                    // 'code',  // 插入代码
-                    'undo',  // 撤销
-                    'redo'  // 重复
-                ],
-                form: {
-                    name: '',
-                    type: '',
+import TopBar from "../components/edit/TopBar";
+import { getCusBasicInfo } from "../control/Self";
+import { jumpInCurPage } from "../util/PageJump";
+import WangEditor from 'wangeditor'
+import { addNewArt } from "../control/Edit";
+export default {
+    name: "EditView.vue",
+    components: { TopBar },
+    mounted: function () {
+        getCusBasicInfo(0)
+            .then((response) => {
+                if (response.data) {
+                    this.customer = response.data;
+                } else {
+                    // this.$router.push({path: '/port'}); 
+                    jumpInCurPage('/port');
                 }
+            });
+
+        let editor = new WangEditor(this.$refs.toolbar, this.$refs.textplace);
+        this.editor = editor;
+        editor.customConfig.onchange = (html) => {
+            this.message = html;
+        };
+        editor.customConfig.menus = this.menus;
+        editor.create();
+
+        window.scrollTo(0, 0);
+    },
+    methods: {
+        onSubmit() {
+            // this.$message.info(this.message);
+            let article = {
+                artTitle: this.form.name,
+                artContent: this.message,
+                artCusId: this.customer.cusId,
+                artType: this.form.type,
+                artImageUrl: ''
+            };
+            // this.$message.info(article.artTitle)
+            addNewArt(article)
+                .then(
+                    (response) => {
+                        if (response.data !== 0) {
+                            this.$message.info("文章添加成功");
+                            jumpInCurPage('/article/' + response.data)
+                        } else {
+                            this.$message.info("文章添加失败");
+                        }
+                    }
+                )
+        },
+        cancelCreate: function () {
+            jumpInCurPage('/index')
+        }
+    },
+    data: function () {
+        return {
+            customer: {
+
+            },
+            message: 'message',
+            menus: [
+                'head',  // 标题
+                'bold',  // 粗体
+                // 'fontSize',  // 字号
+                // 'fontName',  // 字体
+                'italic',  // 斜体
+                'underline',  // 下划线
+                'strikeThrough',  // 删除线
+                // 'foreColor',  // 文字颜色
+                // 'backColor',  // 背景颜色
+                // 'link',  // 插入链接
+                'list',  // 列表
+                'justify',  // 对齐方式
+                // 'quote',  // 引用
+                'emoticon',  // 表情
+                'image',  // 插入图片
+                'table',  // 表格
+                // 'video',  // 插入视频
+                // 'code',  // 插入代码
+                'undo',  // 撤销
+                'redo'  // 重复
+            ],
+            form: {
+                name: '',
+                type: '',
             }
         }
     }
+}
 </script>
 
 
 <style scoped src="../assets/css/Narrow.css"></style>
 <style scoped>
+.title {
+    display: flex;
+}
 
-    .title {
-        display: flex;
-    }
+.toolbar {
+    height: 50px;
+    border: 0 solid #f1f1f1;
+    background-color: #f1f1f1;
+    position: relative;
+}
 
-    .toolbar {
-        height: 50px;
-        border: 0 solid #f1f1f1;
-        background-color:#f1f1f1;
-        position: relative;
-    }
+.textplace {
+    height: 600px;
+    border: 1px solid #f1f1f1;
+    text-align: left;
+    margin-bottom: 40px;
+    /*overflow: hidden;*/
+}
 
-    .textplace {
-        height: 600px;
-        border: 1px solid #f1f1f1;
-        text-align: left;
-        margin-bottom: 40px;
-        /*overflow: hidden;*/
-    }
+.textplace>>>.w-e-text {
+    padding: 5px 10px;
+}
 
-    .textplace >>> .w-e-text {
-        padding: 5px 10px;
-    }
+.textplace>>>.w-e-text p {
+    margin: 0;
+    line-height: 20px;
+}
 
-    .textplace >>> .w-e-text p {
-        margin: 0;
-        line-height: 20px;
-    }
+/*.title-panel.el-form-item >>> .el-form-item__content {*/
+/*    margin-left: 20px !important;*/
+/*}*/
 
-    /*.title-panel.el-form-item >>> .el-form-item__content {*/
-    /*    margin-left: 20px !important;*/
-    /*}*/
+.edit-panel.el-form-item>>>.el-form-item__content {
+    margin: 0 !important;
+}
 
-    .edit-panel.el-form-item >>> .el-form-item__content {
-        margin: 0 !important;
-    }
-
-    .buttom-panel.el-form-item >>> .el-form-item__content {
-        margin: 0 !important;
-    }
-
-
+.buttom-panel.el-form-item>>>.el-form-item__content {
+    margin: 0 !important;
+}
 </style>
