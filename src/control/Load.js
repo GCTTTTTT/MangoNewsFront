@@ -3,7 +3,10 @@ import axios from 'axios'
 let base = '/api/load/';
 
 export function getArtTypes() {
-    return axios.get(base + 'type');
+
+    // FIX:改接口 用flask做后台
+    return axios.get("http://localhost:9997/type");
+    // return axios.get(base + 'type');
 }
 
 export function getTinyArtOnePageByType(artType, page, pageSize) {
@@ -14,8 +17,9 @@ export function getTinyArtOnePageByType(artType, page, pageSize) {
             pageSize: pageSize
         }
     };
-
-    return axios.get(base + 'tiny', config);
+    // FIX:改接口 用flask做后台
+    return axios.get("http://localhost:9997/get_data_by_type", config);
+    // return axios.get(base + 'tiny', config);
 }
 
 export function getHotArtOnePage(page, pageSize) {
@@ -26,7 +30,9 @@ export function getHotArtOnePage(page, pageSize) {
         }
     };
 
-    return axios.get(base + 'hot', config);
+    // FIX:改接口 用flask做后台
+    return axios.get("http://localhost:9997/random_art", config);
+    // return axios.get(base + 'hot', config);
 }
 
 export function getFullArt(artId) {
@@ -35,7 +41,9 @@ export function getFullArt(artId) {
             artId: artId
         }
     };
-    return axios.get(base + 'main', config);
+    // FIX:改接口 用flask做后台
+    return axios.get("http://localhost:9997/main", config);
+    // return axios.get(base + 'main', config);
 }
 
 export function setArtPreference(artId, type) {
