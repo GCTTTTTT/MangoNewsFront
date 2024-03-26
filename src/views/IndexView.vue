@@ -18,7 +18,14 @@
                     v-on:jump="jumpToArticle"></hot-article>
             </aside>
         </main>
+
+        <div>
+            <DateSelector @dateSelected="fetchData" />
+            <!-- 这里展示数据 -->
+        </div>
     </div>
+    <!-- test -->
+
 </template>
 
 <script>
@@ -31,6 +38,9 @@ import HotArticle from "../components/common/HotArticle";
 // import Logo from '../assets/image/Logo.png'
 import Logo from '../assets/image/text-image-logo.png'
 
+import DateSelector from '@/components/common/DateSelect.vue'; // 假设日期选择器组件位于components文件夹下
+
+
 import { getArtTypes, getHotArtOnePage, getTinyArtOnePageByType } from "../control/Load";
 import { getCusBasicInfo } from "../control/Self";
 // import { jumpInCurPage, jumpInNewPage } from "../util/PageJump";
@@ -39,7 +49,8 @@ import { jumpInCurPage } from "../util/PageJump";
 
 export default {
     name: 'IndexView',
-    components: { HotArticle, EditEntrance, TinyArticle, TopBar, LeftMenu },
+    components: { HotArticle, EditEntrance, TinyArticle, TopBar, LeftMenu, DateSelector },
+
     mounted: function () {
         window.addEventListener('scroll', this.getMoreTinyArt, false);
         getCusBasicInfo(0)
@@ -77,6 +88,13 @@ export default {
         window.scrollTo(0, 0);
     },
     methods: {
+        fetchData(selectedDate) {
+            // 根据选择的日期获取数据
+            window.console.log('Selected date:', selectedDate);
+
+            alert(selectedDate);
+            // 发送请求获取对应日期的数据
+        },
         /**
          * 如果选中的类别超过了 this.leftMenu.majorLength 的限制, 即属于二级类别,
          * 则调换 选中的类别 与 一级类别中最后一个类别 在数组中的位置.
