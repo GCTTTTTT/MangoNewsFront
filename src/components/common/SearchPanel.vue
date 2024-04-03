@@ -29,7 +29,9 @@ export default {
 
 <style scoped>
 .search {
-    width: 400px;
+    /* width: 400px; */
+    width: 250px;
+
     float: left;
     /* margin-left: 20%; */
     /* FIX */
@@ -38,7 +40,9 @@ export default {
 }
 
 .search>>>.el-input {
-    width: 300px;
+    /* width: 300px; */
+    width: 150px;
+
     float: left;
 }
 

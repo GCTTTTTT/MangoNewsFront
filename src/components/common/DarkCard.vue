@@ -5,15 +5,17 @@
 </template>
 
 <script>
-    export default {
-        name: "CardPanel"
-    }
+export default {
+    name: "CardPanel"
+}
 </script>
 
 <style scoped>
-    .dark-card {
-        padding: 15px;
-        background-color: #f4f5f6;
-        border: solid 1px #ebeef5;
-    }
+.dark-card {
+    margin-top: 150px;
+    /* update:3.16 */
+    padding: 15px;
+    background-color: #f4f5f6;
+    border: solid 1px #ebeef5;
+}
 </style>

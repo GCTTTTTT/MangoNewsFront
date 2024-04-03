@@ -7,22 +7,26 @@
             <nav>
                 <left-menu :curIndex="page.menuCurIndex" :majorLength="page.menuMajorLen" :tip="page.menuTip"
                     :artClassList="artTypes" v-on:changeCurIndex="changeCurIndex"></left-menu>
+
+
             </nav>
             <article>
                 <tiny-article v-for="(tinyArticle, i) in tinyArticles" :key="i" :tinyArticle="tinyArticle"
                     v-on:jump="jumpToArticle" v-on:editor="jumpToCustomer"></tiny-article>
             </article>
             <aside>
-                <edit-entrance class="edit-entrance"></edit-entrance>
+                <!-- <edit-entrance class="edit-entrance"></edit-entrance> -->
+                <DateSelector @dateSelected="handleDateSelected" />
+
                 <hot-article :title="page.hotTitle" :hot-articles="hotArticles" v-on:refresh="refreshHot"
                     v-on:jump="jumpToArticle"></hot-article>
             </aside>
         </main>
 
-        <div>
-            <DateSelector @dateSelected="handleDateSelected" />
-            <!-- 这里展示数据 -->
-        </div>
+        <!-- <div> -->
+        <!-- <DateSelector @dateSelected="handleDateSelected" /> -->
+        <!-- 这里展示数据 -->
+        <!-- </div> -->
     </div>
     <!-- test -->
 
@@ -32,7 +36,7 @@
 import TopBar from '../components/index/TopBar'
 import LeftMenu from "../components/index/LeftMenu"
 import TinyArticle from '../components/common/TinyArticle'
-import EditEntrance from "../components/common/EditEntrance";
+// import EditEntrance from "../components/common/EditEntrance";
 import HotArticle from "../components/common/HotArticle";
 
 // import Logo from '../assets/image/Logo.png'
@@ -51,7 +55,7 @@ export default {
     name: 'IndexView',
     components: {
         HotArticle,
-        EditEntrance,
+        // EditEntrance,
         TinyArticle,
         TopBar,
         LeftMenu,
@@ -60,48 +64,93 @@ export default {
 
     mounted: function () {
         window.addEventListener('scroll', this.getMoreTinyArt, false);
-        getCusBasicInfo(0)
-            .then((response) => {
-                if (response.data) {
-                    this.customer = response.data;
-                } else {
-                    // this.$router.push({path: '/port'});
-                    jumpInCurPage('/port');
-                }
 
-            });
-        getArtTypes("2024-03-20")
-            .then((response) => {
-                // alert(response.data);
-                this.artTypes = response.data;
+        this.fetchData();
 
-            })
-            .then(() => {
-                getTinyArtOnePageByType("2024-03-20", '综合', this.page.tinyPage, this.page.tinyPageSize)
-                    .then((response) => {
-                        // alert(response.data)
-                        // 遍历对象数组，将每个对象转换为字符串并连接成一个长字符串
-                        // let dataString = response.data.map(obj => JSON.stringify(obj)).join('\n');
-                        // window.console.log(dataString);
-                        // alert(dataString);
+        // getCusBasicInfo(0)
+        //     .then((response) => {
+        //         if (response.data) {
+        //             this.customer = response.data;
+        //         } else {
+        //             // this.$router.push({path: '/port'});
+        //             jumpInCurPage('/port');
+        //         }
 
-                        this.tinyArticles = response.data;
-                    });
-                getHotArtOnePage("2024-03-20", this.page.hotPage, this.page.hotPageSize)
-                    .then((response) => {
-                        this.hotArticles = response.data;
-                    });
-            });
-        window.scrollTo(0, 0);
+        //     });
+        // getArtTypes("2024-03-20")
+        //     .then((response) => {
+        //         // alert(response.data);
+        //         this.artTypes = response.data;
+
+        //     })
+        //     .then(() => {
+        //         getTinyArtOnePageByType("2024-03-20", '综合', this.page.tinyPage, this.page.tinyPageSize)
+        //             .then((response) => {
+        //                 // alert(response.data)
+        //                 // 遍历对象数组，将每个对象转换为字符串并连接成一个长字符串
+        //                 // let dataString = response.data.map(obj => JSON.stringify(obj)).join('\n');
+        //                 // window.console.log(dataString);
+        //                 // alert(dataString);
+
+        //                 this.tinyArticles = response.data;
+        //             });
+        //         getHotArtOnePage("2024-03-20", this.page.hotPage, this.page.hotPageSize)
+        //             .then((response) => {
+        //                 this.hotArticles = response.data;
+        //             });
+        //     });
+        // window.scrollTo(0, 0);
     },
     methods: {
-        handleDateSelected(selectedDate) {
-            // 根据选择的日期获取数据
-            window.console.log('Selected date:', selectedDate);
+        getYesterdayDate() {
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 2);
 
-            alert(selectedDate);
-            // 发送请求获取对应日期的数据
+            const year = yesterday.getFullYear();
+            const month = String(yesterday.getMonth() + 1).padStart(2, '0');
+            const day = String(yesterday.getDate()).padStart(2, '0');
+
+            return `${year}-${month}-${day}`;
         },
+
+        handleDateSelected(selectedDate) {
+            this.selectedDate = selectedDate;
+        },
+        fetchData() {
+            getCusBasicInfo(0)
+                .then((response) => {
+                    if (response.data) {
+                        this.customer = response.data;
+                    } else {
+                        // this.$router.push({path: '/port'});
+                        jumpInCurPage('/port');
+                    }
+                });
+            getArtTypes(this.selectedDate)
+                .then((response) => {
+                    this.artTypes = response.data;
+                })
+                .then(() => {
+                    getTinyArtOnePageByType(this.selectedDate, '综合', this.page.tinyPage, this.page.tinyPageSize)
+                        .then((response) => {
+                            this.tinyArticles = response.data;
+                        });
+                    getHotArtOnePage(this.selectedDate, this.page.hotPage, this.page.hotPageSize)
+                        .then((response) => {
+                            this.hotArticles = response.data;
+                        });
+                });
+            window.scrollTo(0, 0);
+        },
+
+        // handleDateSelected(selectedDate) {
+        //     // 根据选择的日期获取数据
+        //     window.console.log('Selected date:', selectedDate);
+
+        //     alert(selectedDate);
+        //     // 发送请求获取对应日期的数据
+        // },
         /**
          * 如果选中的类别超过了 this.leftMenu.majorLength 的限制, 即属于二级类别,
          * 则调换 选中的类别 与 一级类别中最后一个类别 在数组中的位置.
@@ -119,10 +168,15 @@ export default {
             }
 
             this.page.tinyPage = 0;
-            getTinyArtOnePageByType("2024-03-20", this.artTypes[this.page.menuCurIndex], this.page.tinyPage, this.page.tinyPageSize)
+            // getTinyArtOnePageByType("2024-03-20", this.artTypes[this.page.menuCurIndex], this.page.tinyPage, this.page.tinyPageSize)
+            //     .then((response) => {
+            //         this.tinyArticles = response.data;
+            //     });
+            getTinyArtOnePageByType(this.selectedDate, this.artTypes[this.page.menuCurIndex], this.page.tinyPage, this.page.tinyPageSize)
                 .then((response) => {
                     this.tinyArticles = response.data;
                 });
+
             window.scrollTo(0, 0);
         },
 
@@ -135,7 +189,11 @@ export default {
             } else {
                 this.page.hotPage += 1;
             }
-            getHotArtOnePage("2024-03-20", this.page.hotPage, this.page.hotPageSize)
+            // getHotArtOnePage("2024-03-20", this.page.hotPage, this.page.hotPageSize)
+            //     .then((response) => {
+            //         this.hotArticles = response.data;
+            //     })
+            getHotArtOnePage(this.selectedDate, this.page.hotPage, this.page.hotPageSize)
                 .then((response) => {
                     this.hotArticles = response.data;
                 })
@@ -151,7 +209,13 @@ export default {
             let scrollHeight = artHeight - innerHeight + otherHeight;
             if (scrollHeight <= (document.documentElement.scrollTop + 5)) {
                 this.page.tinyPage += 1;
-                getTinyArtOnePageByType("2024-03-20", this.artTypes[this.page.menuCurIndex], this.page.tinyPage, this.page.tinyPageSize)
+                // getTinyArtOnePageByType("2024-03-20", this.artTypes[this.page.menuCurIndex], this.page.tinyPage, this.page.tinyPageSize)
+                //     .then((response) => {
+                //         for (let i = 0; i < response.data.length; i++) {
+                //             this.tinyArticles.push(response.data[i]);
+                //         }
+                //     })
+                getTinyArtOnePageByType(this.selectedDate, this.artTypes[this.page.menuCurIndex], this.page.tinyPage, this.page.tinyPageSize)
                     .then((response) => {
                         for (let i = 0; i < response.data.length; i++) {
                             this.tinyArticles.push(response.data[i]);
@@ -182,8 +246,18 @@ export default {
 
         }
     },
+    watch: {
+        selectedDate() {
+            this.fetchData();
+        }
+    },
     data: function () {
         return {
+            // todo:这里莫不是默认日期？！
+            // selectedDate: '2024-03-20',
+            selectedDate: this.getYesterdayDate(),
+
+
             // 记录页面控制信息
             page: {
                 menuCurIndex: 0,
@@ -241,4 +315,9 @@ export default {
 .edit-entrance {
     margin-bottom: 10px;
 }
+
+/* .el-input--prefix .el-input__inner {
+    padding-left: 30px;
+    width: 140px;
+} */
 </style>

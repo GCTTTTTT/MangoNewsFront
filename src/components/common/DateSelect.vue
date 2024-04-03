@@ -44,6 +44,7 @@ export default {
         <el-date-picker v-model="selectedDate" type="date" placeholder="选择日期"
             @change="handleDateChange"></el-date-picker>
     </div>
+
 </template>
 
 <script>
@@ -75,3 +76,14 @@ export default {
     }
 };
 </script>
+
+
+<!-- <style scoped>
+/*.bottom-tip {*/
+/*    color: #888888;*/
+/*}*/
+.el-input--prefix .el-input__inner {
+    padding-left: 30px;
+    width: 140px;
+}
+</style> -->
