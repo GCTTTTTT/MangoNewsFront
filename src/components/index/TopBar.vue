@@ -6,7 +6,7 @@
 
         </div>
         <search-panel :tip="tip" v-on:search="searchArticles"></search-panel>
-        <GetDataButton></GetDataButton>
+        <!-- <GetDataButton></GetDataButton> -->
         <div class="manage">
             <img v-if="customer.cusAvatarUrl !== ''" :src="customer.cusAvatarUrl" v-on:click="jumpToSelf" />
             <img v-if="customer.cusAvatarUrl === ''" :src="manSrc" v-on:click="jumpToSelf" />
@@ -28,14 +28,14 @@ import { jumpInCurPage } from "../../util/PageJump";
 import { quitLogin } from "../../control/Self";
 
 // Update:访问算法服务器接口 FIX 3.25
-import GetDataButton from '../flask-server/getDataButton.vue';
+// import GetDataButton from '../flask-server/getDataButton.vue';
 
 export default {
     name: 'TopBar',
     props: ['customer'],
     components: {
         SearchPanel,
-        GetDataButton
+        // GetDataButton
     },
     methods: {
         jumpToIndex: function () {

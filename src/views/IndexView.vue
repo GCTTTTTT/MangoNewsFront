@@ -20,7 +20,7 @@
         </main>
 
         <div>
-            <DateSelector @dateSelected="fetchData" />
+            <DateSelector @dateSelected="handleDateSelected" />
             <!-- 这里展示数据 -->
         </div>
     </div>
@@ -49,7 +49,14 @@ import { jumpInCurPage } from "../util/PageJump";
 
 export default {
     name: 'IndexView',
-    components: { HotArticle, EditEntrance, TinyArticle, TopBar, LeftMenu, DateSelector },
+    components: {
+        HotArticle,
+        EditEntrance,
+        TinyArticle,
+        TopBar,
+        LeftMenu,
+        DateSelector
+    },
 
     mounted: function () {
         window.addEventListener('scroll', this.getMoreTinyArt, false);
@@ -63,14 +70,14 @@ export default {
                 }
 
             });
-        getArtTypes()
+        getArtTypes("2024-03-20")
             .then((response) => {
                 // alert(response.data);
                 this.artTypes = response.data;
 
             })
             .then(() => {
-                getTinyArtOnePageByType('综合', this.page.tinyPage, this.page.tinyPageSize)
+                getTinyArtOnePageByType("2024-03-20", '综合', this.page.tinyPage, this.page.tinyPageSize)
                     .then((response) => {
                         // alert(response.data)
                         // 遍历对象数组，将每个对象转换为字符串并连接成一个长字符串
@@ -80,7 +87,7 @@ export default {
 
                         this.tinyArticles = response.data;
                     });
-                getHotArtOnePage(this.page.hotPage, this.page.hotPageSize)
+                getHotArtOnePage("2024-03-20", this.page.hotPage, this.page.hotPageSize)
                     .then((response) => {
                         this.hotArticles = response.data;
                     });
@@ -88,7 +95,7 @@ export default {
         window.scrollTo(0, 0);
     },
     methods: {
-        fetchData(selectedDate) {
+        handleDateSelected(selectedDate) {
             // 根据选择的日期获取数据
             window.console.log('Selected date:', selectedDate);
 
@@ -112,7 +119,7 @@ export default {
             }
 
             this.page.tinyPage = 0;
-            getTinyArtOnePageByType(this.artTypes[this.page.menuCurIndex], this.page.tinyPage, this.page.tinyPageSize)
+            getTinyArtOnePageByType("2024-03-20", this.artTypes[this.page.menuCurIndex], this.page.tinyPage, this.page.tinyPageSize)
                 .then((response) => {
                     this.tinyArticles = response.data;
                 });
@@ -128,7 +135,7 @@ export default {
             } else {
                 this.page.hotPage += 1;
             }
-            getHotArtOnePage(this.page.hotPage, this.page.hotPageSize)
+            getHotArtOnePage("2024-03-20", this.page.hotPage, this.page.hotPageSize)
                 .then((response) => {
                     this.hotArticles = response.data;
                 })
@@ -144,7 +151,7 @@ export default {
             let scrollHeight = artHeight - innerHeight + otherHeight;
             if (scrollHeight <= (document.documentElement.scrollTop + 5)) {
                 this.page.tinyPage += 1;
-                getTinyArtOnePageByType(this.artTypes[this.page.menuCurIndex], this.page.tinyPage, this.page.tinyPageSize)
+                getTinyArtOnePageByType("2024-03-20", this.artTypes[this.page.menuCurIndex], this.page.tinyPage, this.page.tinyPageSize)
                     .then((response) => {
                         for (let i = 0; i < response.data.length; i++) {
                             this.tinyArticles.push(response.data[i]);

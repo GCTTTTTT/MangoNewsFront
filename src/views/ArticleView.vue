@@ -51,11 +51,11 @@ export default {
                     jumpInCurPage('/port');
                 }
             });
-        getFullArt(artId)
+        getFullArt("2024-03-20", artId)
             .then((response) => {
                 this.artMain = response.data;
             });
-        getHotArtOnePage(this.page.hotPage, this.page.hotPageSize)
+        getHotArtOnePage("2024-03-20", this.page.hotPage, this.page.hotPageSize)
             .then((response) => {
                 this.hotArticles = response.data;
             });
