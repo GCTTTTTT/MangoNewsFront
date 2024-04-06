@@ -7,8 +7,6 @@
             <nav>
                 <left-menu :curIndex="page.menuCurIndex" :majorLength="page.menuMajorLen" :tip="page.menuTip"
                     :artClassList="artTypes" v-on:changeCurIndex="changeCurIndex"></left-menu>
-
-
             </nav>
             <article>
                 <tiny-article v-for="(tinyArticle, i) in tinyArticles" :key="i" :tinyArticle="tinyArticle"
@@ -105,7 +103,7 @@ export default {
         getYesterdayDate() {
             const today = new Date();
             const yesterday = new Date(today);
-            yesterday.setDate(today.getDate() - 2);
+            yesterday.setDate(today.getDate() - 15);
 
             const year = yesterday.getFullYear();
             const month = String(yesterday.getMonth() + 1).padStart(2, '0');
@@ -228,10 +226,11 @@ export default {
          * 跳转至文章页面
          * @param artId
          */
-        jumpToArticle: function (artId) {
+        jumpToArticle: function (artTime, artId) {
+            // selectedDate = this.selectedDate
             // this.$router.push('/article/' + artId)
             // jumpInNewPage('/article/' + artId);
-            jumpInCurPage('/article/' + artId);
+            jumpInCurPage('/article/' + artTime + '/' + artId);
 
         },
 

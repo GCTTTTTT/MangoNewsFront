@@ -19,8 +19,9 @@
         <div class="hot-art-body clear-float" v-for="(hotArticle, i) in parsedHotArticles" :key="i">
             <img class="body-image" v-if="hotArticle.parsedImageUrls.length > 0" :src="hotArticle.parsedImageUrls[0]"
                 @error="onImageError">
+            <!-- FIX:4.6 -->
             <span class="body-title" :class="[hotArticle.parsedImageUrls.length > 0 ? narrowTitle : wideTitle]"
-                @click="jumpToArticle(hotArticle.artId)">
+                @click="jumpToArticle(hotArticle.artTime, hotArticle.artId)">
                 {{ hotArticle.artTitle }}
             </span>
         </div>
@@ -62,8 +63,8 @@ export default {
         }
     },
     methods: {
-        jumpToArticle: function (artId) {
-            this.$emit('jump', artId);
+        jumpToArticle: function (artTime, artId) {
+            this.$emit('jump', artTime, artId);
         },
         refreshArticles: function () {
             this.$emit('refresh');

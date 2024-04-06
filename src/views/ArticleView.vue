@@ -4,14 +4,14 @@
         <main>
             <article>
                 <article-main :articleMain="artMain"></article-main>
-                <comment-reply-main :comments="comments" :customer="customer"
-                    @quickShow="quickShow"></comment-reply-main>
+                <!-- <comment-reply-main :comments="comments" :customer="customer" -->
+                <!-- @quickShow="quickShow"></comment-reply-main> -->
             </article>
             <aside>
                 <editor-brief class="editor-brief" :articleAuthor="artMain.customer"
                     :artSelfStatus="artMain.cusArtBehavior" :customer="customer"
                     v-on:editor="jumpToCustomer"></editor-brief>
-                <edit-entrance class="edit-entrance"></edit-entrance>
+                <!-- <edit-entrance class="edit-entrance"></edit-entrance> -->
                 <hot-article :title="page.hotTitle" :hot-articles="hotArticles" v-on:refresh="refreshHot"
                     v-on:jump="jumpToArticle"></hot-article>
             </aside>
@@ -21,10 +21,10 @@
 
 <script>
 import TopBar from "../components/article/TopBar";
-import CommentReplyMain from "../components/article/CommentReplyCenter";
+// import CommentReplyMain from "../components/article/CommentReplyCenter";
 import ArticleMain from "../components/article/ArticleCenter";
 import EditorBrief from "../components/common/EditorBrief";
-import EditEntrance from "../components/common/EditEntrance";
+// import EditEntrance from "../components/common/EditEntrance";
 import HotArticle from "../components/common/HotArticle";
 
 // import Logo from '../assets/image/Logo.png'
@@ -39,9 +39,19 @@ import { jumpInCurPage } from "../util/PageJump";
 
 export default {
     name: "ArticleView",
-    components: { HotArticle, EditEntrance, EditorBrief, ArticleMain, CommentReplyMain, TopBar },
+    components: {
+        HotArticle,
+        // EditEntrance, 
+        EditorBrief,
+        ArticleMain,
+        // CommentReplyMain,
+        TopBar
+    },
     mounted: function () {
+        let selectedDate = this.$route.params.artTime;
         let artId = this.$route.params.artId;
+        // alert(selectedDate);
+        // alert(artId);
         getCusBasicInfo(0)
             .then((response) => {
                 if (response.data) {
@@ -51,11 +61,11 @@ export default {
                     jumpInCurPage('/port');
                 }
             });
-        getFullArt("2024-03-20", artId)
+        getFullArt(selectedDate, artId)
             .then((response) => {
                 this.artMain = response.data;
             });
-        getHotArtOnePage("2024-03-20", this.page.hotPage, this.page.hotPageSize)
+        getHotArtOnePage(selectedDate, this.page.hotPage, this.page.hotPageSize)
             .then((response) => {
                 this.hotArticles = response.data;
             });
@@ -69,13 +79,17 @@ export default {
         /**
          * 刷新热点新闻
          */
+        // let selectedDate = this.$route.params.selectedDate;
+
         refreshHot: function () {
+            let selectedDate = this.$route.params.artTime;
+
             if (this.page.hotPage > 3) {
                 this.page.hotPage = 0;
             } else {
                 this.page.hotPage += 1;
             }
-            getHotArtOnePage(this.page.hotPage, this.page.hotPageSize)
+            getHotArtOnePage(selectedDate, this.page.hotPage, this.page.hotPageSize)
                 .then((response) => {
                     this.hotArticles = response.data;
                 })
@@ -88,9 +102,16 @@ export default {
          * 跳转至文章页面
          * @param artId
          */
-        jumpToArticle: function (artId) {
+        // jumpToArticle: function (artId) {
+        //     // jumpInNewPage('/article/' + artId);
+        //     jumpInCurPage('/article/' + artId);
+
+        // },
+        jumpToArticle: function (artTime, artId) {
+            // selectedDate = this.selectedDate
+            // this.$router.push('/article/' + artId)
             // jumpInNewPage('/article/' + artId);
-            jumpInCurPage('/article/' + artId);
+            jumpInCurPage('/article/' + artTime + '/' + artId);
 
         },
 
@@ -110,6 +131,8 @@ export default {
     },
     data: function () {
         return {
+            // selectedDate_a = this.$route.params.selectedDate,
+
             page: {
                 hotTitle: '热点新闻',
                 hotPage: 0,

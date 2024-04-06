@@ -9,7 +9,9 @@
         </div>
         <div class="content" v-html="articleMain.artContent"></div>
         <!-- update:3.16test -->
-        <div class="up-down clear-float">
+        <!-- update:4.6test -->
+
+        <!-- <div class="up-down clear-float">
             <div class="up">
                 <img :src='control.art.up' @click="cusLikeArt" />
                 <span>{{ articleMain.artLikeNum }}</span>
@@ -18,7 +20,7 @@
                 <img :src="control.art.down" @click="cusDislikeArt" />
                 <span>{{ articleMain.artDislikeNum }}</span>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 

@@ -8,9 +8,9 @@
             </article>
             <aside>
                 <!--<right-menu></right-menu>-->
-                <edit-entrance class="edit-entrance"></edit-entrance>
-                <hot-article :title="page.hotTitle" :hot-articles="hotArticles" v-on:refresh="refreshHot"
-                    v-on:jump="jumpToArticle"></hot-article>
+                <!-- <edit-entrance class="edit-entrance"></edit-entrance> -->
+                <!-- <hot-article :title="page.hotTitle" :hot-articles="hotArticles" v-on:refresh="refreshHot"
+                    v-on:jump="jumpToArticle"></hot-article> -->
             </aside>
         </main>
     </div>
@@ -19,15 +19,15 @@
 <script>
 import TopBar from "../components/search/TopBar";
 // import TinyCenter from "../components/search/TinyCenter";
-import EditEntrance from "../components/common/EditEntrance";
-import HotArticle from "../components/common/HotArticle";
+// import EditEntrance from "../components/common/EditEntrance";
+// import HotArticle from "../components/common/HotArticle";
 import TinyArticle from "../components/common/TinyArticle";
 // import RightMenu from "../components/index/RightMenu";
 
 // import Logo from '../assets/image/Logo.png'
 import Logo from '../assets/image/text-image-logo.png'
 
-import { getHotArtOnePage } from "../control/Load";
+// import { getHotArtOnePage } from "../control/Load";
 import { searchContentSimple } from "../control/Search";
 import { getCusBasicInfo } from "../control/Self";
 // import {jumpInCurPage, jumpInNewPage} from "../util/PageJump";
@@ -37,11 +37,18 @@ import { jumpInCurPage } from "../util/PageJump";
 
 export default {
     name: "SearchView",
-    components: { TinyArticle, HotArticle, EditEntrance, TopBar },
+    components: {
+        TinyArticle,
+        // HotArticle,
+        //  EditEntrance, 
+        TopBar
+    },
     mounted: function () {
         window.addEventListener('scroll', this.getMoreTinyArt, false);
+        let date_sel = this.$route.params.dateSel;
         let key = this.$route.params.key;
-        searchContentSimple(key, this.page.tinyPage, this.page.tinyPageSize)
+        // alert("SearchVIew" + date_sel + ' ' + key);
+        searchContentSimple(date_sel, key, this.page.tinyPage, this.page.tinyPageSize)
             .then((response) => {
                 this.tinyArticles = response.data;
             });
@@ -54,10 +61,10 @@ export default {
                 }
 
             });
-        getHotArtOnePage(this.page.hotPage, this.page.hotPageSize)
-            .then((response) => {
-                this.hotArticles = response.data;
-            });
+        // getHotArtOnePage(this.page.hotPage, this.page.hotPageSize)
+        //     .then((response) => {
+        //         this.hotArticles = response.data;
+        //     });
         window.scrollTo(0, 0);
     },
     methods: {
@@ -69,7 +76,7 @@ export default {
             if (scrollHeight <= (document.documentElement.scrollTop + 5)) {
                 this.page.tinyPage += 1;
                 // let key = this.$route.params.key;
-                searchContentSimple(this.page.key, this.page.tinyPage, this.page.tinyPageSize)
+                searchContentSimple(this.page.date_sel, this.page.key, this.page.tinyPage, this.page.tinyPageSize)
                     .then((response) => {
                         for (let i = 0; i < response.data.length; i++) {
                             this.tinyArticles.push(response.data[i]);
@@ -78,28 +85,29 @@ export default {
             }
         },
 
-        refreshHot: function () {
-            if (this.page.hotPage > 3) {
-                this.page.hotPage = 0;
-            } else {
-                this.page.hotPage += 1;
-            }
-            getHotArtOnePage(this.page.hotPage, this.page.hotPageSize)
-                .then((response) => {
-                    this.hotArticles = response.data;
-                })
-                .catch(() => {
-                    this.$message.info("抱歉, 发生了点故障");
-                });
-        },
+        // refreshHot: function () {
+        //     if (this.page.hotPage > 3) {
+        //         this.page.hotPage = 0;
+        //     } else {
+        //         this.page.hotPage += 1;
+        //     }
+        //     getHotArtOnePage(this.page.hotPage, this.page.hotPageSize)
+        //         .then((response) => {
+        //             this.hotArticles = response.data;
+        //         })
+        //         .catch(() => {
+        //             this.$message.info("抱歉, 发生了点故障");
+        //         });
+        // },
         /**
          * 跳转至文章页面
          * @param artId
          */
-        jumpToArticle: function (artId) {
+        jumpToArticle: function (artTime, artId) {
+            // selectedDate = this.selectedDate
             // this.$router.push('/article/' + artId)
             // jumpInNewPage('/article/' + artId);
-            jumpInCurPage('/article/' + artId);
+            jumpInCurPage('/article/' + artTime + '/' + artId);
 
         },
 

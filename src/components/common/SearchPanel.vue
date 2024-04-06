@@ -15,12 +15,27 @@ export default {
     name: "SearchPanel",
     props: ['tip'],
     methods: {
+        getYesterdayDate() {
+            const today = new Date();
+            const yesterday = new Date(today);
+            yesterday.setDate(today.getDate() - 15);
+
+            const year = yesterday.getFullYear();
+            const month = String(yesterday.getMonth() + 1).padStart(2, '0');
+            const day = String(yesterday.getDate()).padStart(2, '0');
+
+            return `${year}-${month}-${day}`;
+        },
         search: function () {
-            this.$emit('search', this.message);
+            // DONE
+            // alert("SearchPanel" + this.date_sel + ' ' + this.message);
+            this.$emit('search', this.date_sel, this.message); // 这里没传上去？
         }
     },
     data: function () {
         return {
+            date_sel: this.getYesterdayDate(),
+
             message: '',
         }
     }

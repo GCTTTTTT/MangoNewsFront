@@ -14,12 +14,15 @@
             <img :src="parsedImageUrls[0]" alt="Default Image" @error="setDefaultImage">
         </div>
         <div class="word" :class="[wideSwitch ? tinyArt : tinyArtWide]">
-            <div class="title" @click="jumpToArticle(tinyArticle.artId)">{{ tinyArticle.artTitle }}</div>
+            <!-- 4.6FIX -->
+            <div class="title" @click="jumpToArticle(tinyArticle.artTime, tinyArticle.artId)">{{ tinyArticle.artTitle }}
+            </div>
             <!--<div>adsfasfdasdf</div>-->
             <div class="info">
                 <span class="type">{{ tinyArticle.artType }}</span>
-                <span class="customer" @click="jumpToCustomer(tinyArticle.customer.cusId)">{{ tinyArticle.customer.cusName
-                }}</span>
+                <span class="customer" @click="jumpToCustomer(tinyArticle.customer.cusId)">{{
+            tinyArticle.customer.cusName
+        }}</span>
                 <span>{{ date(tinyArticle.artTime) }}</span>
             </div>
         </div>
@@ -55,8 +58,8 @@ export default {
 
     },
     methods: {
-        jumpToArticle: function (artId) {
-            this.$emit('jump', artId);
+        jumpToArticle: function (artTime, artId) {
+            this.$emit('jump', artTime, artId);
         },
 
         jumpToCustomer: function (cusId) {

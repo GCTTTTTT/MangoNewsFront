@@ -13,11 +13,11 @@
                 </div>
                 <div class="word" :class="[customerDynamic.article.artImageUrl !== '' ? tinyArt : tinyArtWide]">
                     <div class="title" @click="jumpToArticle(customerDynamic.article.artId)">{{
-                        customerDynamic.article.artTitle }}</div>
+            customerDynamic.article.artTitle }}</div>
                     <div class="info">
                         <span class="type">{{ customerDynamic.article.artType }}</span>
                         <span class="customer" @click="jumpToCustomer(customerDynamic.cusTo.cusId)">{{
-                            customerDynamic.cusTo.cusName }}</span>
+            customerDynamic.cusTo.cusName }}</span>
                         <span>{{ date(customerDynamic.article.artTime) }}</span>
                     </div>
                 </div>
@@ -25,13 +25,14 @@
             <!-- 评论处理 -->
             <div v-if="customerDynamic.cbrType === 2" class="com-han">
                 <div class="com clear-float">
-                    <div class="title" @click="jumpToArticle(customerDynamic.cbrArtId)">{{ customerDynamic.article.artTitle
-                    }}</div>
+                    <div class="title" @click="jumpToArticle(customerDynamic.cbrArtId)">{{
+            customerDynamic.article.artTitle
+        }}</div>
                     <div class="com-content" v-html="customerDynamic.comment.comContent"></div>
                     <div class="info">
                         <span class="type">{{ customerDynamic.article.artType }}</span>
                         <span class="customer" @click="jumpToCustomer(customerDynamic.cusTo.cusId)">{{
-                            customerDynamic.cusTo.cusName }}</span>
+            customerDynamic.cusTo.cusName }}</span>
                         <span>{{ date(customerDynamic.comment.comTime) }}</span>
                     </div>
                 </div>
@@ -39,13 +40,14 @@
             <!-- 回复处理 -->
             <div v-if="customerDynamic.cbrType === 3" class="rep-han">
                 <div class="rep clear-float">
-                    <div class="title" @click="jumpToArticle(customerDynamic.cbrArtId)">{{ customerDynamic.article.artTitle
-                    }}</div>
+                    <div class="title" @click="jumpToArticle(customerDynamic.cbrArtId)">{{
+            customerDynamic.article.artTitle
+        }}</div>
                     <div class="com-content" v-html="customerDynamic.reply.repContent"></div>
                     <div class="info">
                         <span class="type">{{ customerDynamic.article.artType }}</span>
                         <span class="customer" @click="jumpToCustomer(customerDynamic.cusTo.cusId)">{{
-                            customerDynamic.cusTo.cusName }}</span>
+            customerDynamic.cusTo.cusName }}</span>
                         <span>{{ date(customerDynamic.reply.repTime) }}</span>
                     </div>
                 </div>
@@ -53,17 +55,18 @@
             <!-- 用户关注 -->
             <div v-if="customerDynamic.cbrType === 0" class="fol-han">
                 <div class="name-time">
-                    <div class="title" @click="jumpToCustomer(customerDynamic.cusTo.cusId)">{{ customerDynamic.cusTo.cusName
-                    }}</div>
+                    <div class="title" @click="jumpToCustomer(customerDynamic.cusTo.cusId)">{{
+                        customerDynamic.cusTo.cusName
+                        }}</div>
                     <div class="info">
-                        <span>{{ date(customerDynamic.cbrTime) }}</span>
+                        <!-- <span>{{ date(customerDynamic.cbrTime) }}</span> -->
                     </div>
                 </div>
             </div>
 
-        </float-card>>
+        </float-card>
 
-        <span class="bottom-tip">我也是有底线哒 ~</span>
+        <!-- <span class="bottom-tip">我也是有底线哒 ~</span> -->
     </div>
 </template>
 
@@ -283,4 +286,5 @@ export default {
     border-style: solid;
     border-radius: 3px;
     color: darkred;
-}</style>
+}
+</style>

@@ -12,7 +12,7 @@ export default {
 
 <style scoped>
 .dark-card {
-    margin-top: 150px;
+    margin-top: 20px;
     /* update:3.16 */
     padding: 15px;
     background-color: #f4f5f6;

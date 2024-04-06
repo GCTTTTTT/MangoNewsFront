@@ -18,7 +18,7 @@
 import SearchPanel from '../common/SearchPanel'
 import Man from '../../assets/image/Man.png'
 // import { jumpInCurPage, jumpInNewPage } from "../../util/PageJump";
-import { jumpInCurPage} from "../../util/PageJump";
+import { jumpInCurPage } from "../../util/PageJump";
 
 import { quitLogin } from "../../control/Self";
 
@@ -35,10 +35,12 @@ export default {
             jumpInCurPage('/self/' + this.customer.cusId)
 
         },
-        searchArticles: function (message) {
-            // jumpInNewPage('/search/' + message)
-            jumpInCurPage('/search/' + message)
-
+        // fix 4.6
+        searchArticles: function (date_sel, message) {
+            // no
+            // alert("TopBAR" + date_sel + ' ' + message);
+            // date_sel = this.date_sel
+            jumpInCurPage('/search/' + date_sel + '/' + message)
             // searchContentByKeyAndTagTypePage(message, 'global', 'test', 0, 10)
         },
         loginOut: function () {

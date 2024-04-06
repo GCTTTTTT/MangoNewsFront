@@ -5,7 +5,9 @@
             <img src="@/assets/image/text-image-logo.png" />
 
         </div>
+        <!-- <search-panel :tip="tip" v-on:search="searchArticles(date_sel, message)"></search-panel> -->
         <search-panel :tip="tip" v-on:search="searchArticles"></search-panel>
+
         <div class="manage">
             <img v-if="customer.cusAvatarUrl !== ''" :src="customer.cusAvatarUrl" v-on:click="jumpToSelf" />
             <img v-if="customer.cusAvatarUrl === ''" :src="manSrc" v-on:click="jumpToSelf" />
@@ -28,6 +30,17 @@ export default {
     props: ['customer'],
     components: { SearchPanel },
     methods: {
+        // getYesterdayDate() {
+        //     const today = new Date();
+        //     const yesterday = new Date(today);
+        //     yesterday.setDate(today.getDate() - 15);
+
+        //     const year = yesterday.getFullYear();
+        //     const month = String(yesterday.getMonth() + 1).padStart(2, '0');
+        //     const day = String(yesterday.getDate()).padStart(2, '0');
+
+        //     return `${year}-${month}-${day}`;
+        // },
         jumpToIndex: function () {
             jumpInCurPage('/index/');
         },
@@ -36,8 +49,11 @@ export default {
             jumpInCurPage('/self/' + this.customer.cusId)
 
         },
-        searchArticles: function (message) {
-            jumpInCurPage('/search/' + message)
+        searchArticles: function (date_sel, message) {
+            // no
+            // alert("TopBAR" + date_sel + ' ' + message);
+            // date_sel = this.date_sel
+            jumpInCurPage('/search/' + date_sel + '/' + message)
             // searchContentByKeyAndTagTypePage(message, 'global', 'test', 0, 10)
         },
         loginOut: function () {
@@ -53,6 +69,7 @@ export default {
     },
     data: function () {
         return {
+            // date_sel: this.getYesterdayDate(),
             tip: '搜索',
             manSrc: Man,
         }

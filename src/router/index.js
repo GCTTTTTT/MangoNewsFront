@@ -24,12 +24,13 @@ const routes = [
     component: IndexView
   },
   {
-    path: '/search/:key',
+    path: '/search/:dateSel/:key',
     name: 'SearchView',
     component: SearchView
   },
   {
-    path: '/article/:artId',
+    // FIX:4.6 改为传两个参数
+    path: '/article/:artTime/:artId',
     name: 'ArticleView',
     component: ArticleView
   },
