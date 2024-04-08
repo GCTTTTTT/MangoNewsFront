@@ -200,13 +200,29 @@ export default {
                 });
         },
 
-        getMoreTinyArt: function () {
+        // getMoreTinyArt: function () {
+        getMoreTinyArt: () => {
+            // alert("get more tiny art");
+
             let artHeight = document.getElementsByTagName('article')[0].offsetHeight;
+
+            // alert("artHeight" + artHeight);
             let innerHeight = window.innerHeight;
-            let otherHeight = 70 + 15;
+            // alert("innerHeight" + innerHeight);
+            // let otherHeight = 70 + 15;
+            let otherHeight = 70;
+
             let scrollHeight = artHeight - innerHeight + otherHeight;
+            // alert("scrollHeight" + scrollHeight);
+            // alert(document.documentElement.scrollTop);
+            // if ((document.documentElement.scrollTop) > 1024) { alert(document.documentElement.scrollTop); }
+
             if (scrollHeight <= (document.documentElement.scrollTop + 5)) {
+                // alert("get more tiny art2");
+
+                // alert(this.tinyPage)
                 this.page.tinyPage += 1;
+                // alert(this.page.tinyPage);
                 // getTinyArtOnePageByType("2024-03-20", this.artTypes[this.page.menuCurIndex], this.page.tinyPage, this.page.tinyPageSize)
                 //     .then((response) => {
                 //         for (let i = 0; i < response.data.length; i++) {
@@ -215,6 +231,7 @@ export default {
                 //     })
                 getTinyArtOnePageByType(this.selectedDate, this.artTypes[this.page.menuCurIndex], this.page.tinyPage, this.page.tinyPageSize)
                     .then((response) => {
+                        // alert("get more tiny art3");
                         for (let i = 0; i < response.data.length; i++) {
                             this.tinyArticles.push(response.data[i]);
                         }
@@ -263,8 +280,8 @@ export default {
                 menuMajorLen: 8,
                 menuTip: '更多',
                 tinyPage: 0,
-                tinyPageSize: 10,
-                hotTitle: '热点新闻',
+                tinyPageSize: 50,
+                hotTitle: '新闻推荐',
                 hotPage: 0,
                 hotPageSize: 6
             },

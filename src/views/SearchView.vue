@@ -130,7 +130,7 @@ export default {
                 // menuTip: '更多',
                 tinyPage: 0,
                 tinyPageSize: 10,
-                hotTitle: '热点新闻',
+                hotTitle: '新闻推荐',
                 hotPage: 0,
                 hotPageSize: 6,
                 key: this.$route.params.key

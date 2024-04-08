@@ -134,7 +134,7 @@ export default {
             // selectedDate_a = this.$route.params.selectedDate,
 
             page: {
-                hotTitle: '热点新闻',
+                hotTitle: '新闻推荐',
                 hotPage: 0,
                 hotPageSize: 6,
                 // comPage: 0,
